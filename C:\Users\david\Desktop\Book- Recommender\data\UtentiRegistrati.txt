@@ -1,0 +1,6 @@
+nome:Christian
+cognome:Perri
+userName:Krysty4n
+email:Perrichristian24@gmail.com
+password:1234
+codFiscale:Prrcrs01b24d869o

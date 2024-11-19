@@ -1,0 +1,6 @@
+nome:Davide
+cognome:bifora
+userName:Kyura03
+email:Davidebilora03pc@gmail.com
+password:Morfolino1
+codFiscale:Blrdvd02e03a290r

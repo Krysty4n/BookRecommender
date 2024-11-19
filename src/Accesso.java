@@ -1,14 +1,39 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.HashMap;
 import java.util.*;
-
+/**
+ * Questa classe consente di scegliere se:
+ * 1) effettuare il Login alla propria area riservata;
+ * 2) tornare indietro alla pagina iniziale;
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ */
 
 public class Accesso extends javax.swing.JFrame {
+
+    /**
+     * Conterrà lo userName digitato nell'omonimo campo.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private JTextField userName;
+    /**
+     * Conterrà la password digitata nell'omonimo campo.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private final JPasswordField password;
+    /**
+     * Metodo costruttore della finestra Accesso
+     */
     
     public Accesso() { 
         super("ACCESSO");
@@ -16,10 +41,9 @@ public class Accesso extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+//JLABEL
             JLabel usernameL = new JLabel("Username: ");
             JLabel passwordL = new JLabel("Password: ");
-
             JLabel accessoL = new JLabel("Effettua l'accesso");
             accessoL.setFont(new Font("Impact", Font.PLAIN, 35));
             accessoL.setForeground(new Color(24, 24, 24));
@@ -30,19 +54,19 @@ public class Accesso extends javax.swing.JFrame {
             indietro.addActionListener(this::actionListenerIndietro);
             accedi.addActionListener(this::actionListenerAccedi);
 
-
+        //JTEXTFIELD
             this.userName = new JTextField(10);
             this.password = new JPasswordField(10);
             userName.setBorder(BorderFactory.createMatteBorder(0,0,2,0, new Color(24, 24, 24)));
             password.setBorder(BorderFactory.createMatteBorder(0,0,2,0, new Color(24, 24, 24)));
 
-
+    //JPANEL
             JPanel pannelloTitolo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
             JPanel pannelloUserName = new JPanel(new FlowLayout(FlowLayout.CENTER));
             JPanel pannelloPassword = new JPanel(new FlowLayout(FlowLayout.CENTER));
             JPanel pannelloBottoni = new JPanel(new FlowLayout(FlowLayout.CENTER));
             JPanel pannelloCentro = new JPanel();
-
+//aggiungo gli elementi (JButton, JTextField) ai pannelli creati
             pannelloTitolo.add(accessoL);
             pannelloUserName.add(usernameL);
             pannelloUserName.add(this.userName);
@@ -55,6 +79,7 @@ public class Accesso extends javax.swing.JFrame {
 
 
 
+        //aggiungo alla finestra tutti i pannelli
             Container principale = getContentPane();
             principale.setLayout(new BorderLayout());
             principale.add(pannelloTitolo, BorderLayout.NORTH);
@@ -64,6 +89,12 @@ public class Accesso extends javax.swing.JFrame {
 
 
         }
+    /**
+     * Al clic del bottone Indietro verrà creata una nuova finestra Principale
+     * e verrà chiusa la finestra Accesso in esecuzione.
+     * @param e Oggetto  di tipo ActionEvent contenente tuute le informazioni sul clic del bottone Indietro
+     * @see SchermataAvvio
+     */
 
 
 
@@ -73,6 +104,16 @@ public class Accesso extends javax.swing.JFrame {
             dispose();
 
         }
+
+    /**
+     * Al clic del bottone Accedi verrà effettuata la ricerca di userName e password
+     * richiamando il metodo accessoUtente. Se quest'ultimoritorna come valore:
+     * 1) true, verrà creata una nuova finestra AreaRiservata
+     * passando la stringa userName come parametro al costruttore e verrà chiusa la finestra Accesso in esecuzione.
+     * 2) false, verrà una finestra JOptionPane contenente un messaggio di errore.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazioni sul clic del bottone Accedi
+     * @see RisultatiRicerca
+     */
 
 
 
@@ -95,6 +136,15 @@ public class Accesso extends javax.swing.JFrame {
                 }
 
             }
+    /**
+     * Vengono ricercati i due parametri, in ingresso al metodo (nickname e password), all'interno del file "UtentiRegistrati.dati" e, se vengono trovati, il metodo
+     * restituisce "true" altrimenti restituisce "false".
+     * @param userName contiene lo username che verrà ricercato all'interno del file "UtentiRegistrati.dati"
+     * @param password contiene la password che verrà ricercata all'interno del file "UtentiRegistrati.dati"
+     * @return Accedi: "true" se nickname e password corretti, "false" se non corretti.
+     * @throws IOException testo
+     * @throws EOFException testo
+     */
         
 
 

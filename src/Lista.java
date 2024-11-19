@@ -1,9 +1,20 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Scanner;
+/**
+ * Questa classe mostra l'elenco di libri disponibili nella repository.
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ */
 
 public class Lista extends JComponent {
     File listaLibri = new File("C:\\Users\\david\\Desktop\\Book- Recommender\\data\\BooksDatasetClean.csv");
@@ -11,6 +22,10 @@ public class Lista extends JComponent {
     JScrollPane scrollPane;
     JList<String> myList = new JList<>();
     SchermataAvvio schermataAvvio;
+    /**
+     * Questo metodo crea una finestra nella quale si possono visionare i libri dell'elenco
+     * Questo metodo richiama il metodo leggifile
+     */
 
 
 public Lista() {
@@ -20,10 +35,10 @@ public Lista() {
     frame.setResizable(false);
     frame.setLayout(new BorderLayout());
     leggiFile();
-
+//inizializzazione scrollPane, con inserimento della lista
     scrollPane = new JScrollPane(myList);
     scrollPane.setHorizontalScrollBar(null);
-
+//aggiungo lo scrolPane al frame
     frame.add(scrollPane, BorderLayout.CENTER);
 
     JPanel pannello = new JPanel();
@@ -51,6 +66,11 @@ public Lista() {
     frame.add(pannello, BorderLayout.NORTH);
     frame.setVisible(true);
 }
+
+    /**
+     * Questo metodo prende in input il file DA COMPLETARE
+     * Inserire in un array tutti i nome dei libri (Anno, Autore, Titolo), che poi verranno inseriti in una JList
+     */
     public void leggiFile() {
         int count = 0;
         String rigaDaDividere;

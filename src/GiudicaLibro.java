@@ -1,3 +1,8 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
@@ -13,42 +18,132 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+/**
+ * Questa classe consente di giudicare il libro selezionato nella finestra RisultatoRicerca o nella finestra VisualizzaLibreria.
+ * Se il libro è già stato giudicato permette di sovrascriverne il giudizio
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ */
 
 public class GiudicaLibro extends javax.swing.JFrame {
+    /**
+     * Contiene il riferimento della finestra "padre" RisultatiRicerca.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private RisultatiRicerca risultatiRicerca;
+    /**
+     * Contiene il riferimento della finestra "padre" VisualizzaLibreria.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private VisualizzaLibreria libriLibreria;
+    /**
+     * Conterrà un numero da 1 a 5, in base alla valutazione assegnata dal cliente per ogni criterio.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private int[] valutazione = new int[0];
+    /**
+     * Contiene il nome del libro selezionato nella finestra "padre" RisultatiRicerca.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private String titolo;
+    /**
+     * Contiene lo username dell'utente che ha eseguito l'accesso.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private String username;
+    /**
+     * Contiene il valore di ritorno associato al tipo di instanza di r.
+     * Permette il ritorno alla finestra "padre" corretta.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private int ritorno;
+    /**
+     * Contiene l'id del libro da giudicare .
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private String id;
+    /**
+     * Conterrà l'oggetto libreria a cui appartiene il libro.
+     * Se viene passato da RisultatiRicerca risulta null.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private Libreria lb;
+    /**
+     * Variabile boolean che permette di annulare o salvare il giudizio
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private boolean nomEssaggio;
+    /**
+     * Array di stringhe contenenti i nomi dei criteri.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private String[] criterio = {"Stile:", "Contenuto:", "Grandezza:", "Originalita:", "Edizione:"};
+    /**
+     * Array di stringhe contenenti le colonne presenti.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private String[] colonne = {"Criterio valutazione:", "Spiegazione:", "Punteggio:", "Note:(250 max caratteri)"};
+    /**
+     * Array di bottoni. Sono necessari per assegnare la valutazione.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private JButton[] stelle = new JButton[45];
+    /**
+     * Icona stella piena.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private ImageIcon stellaFull = new ImageIcon("C:\\Users\\david\\Desktop\\Book- Recommender\\data\\ICONE\\starFull.png");
 
+    /**
+     * Icona stella vuota.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
+
     private ImageIcon stellaUnfilled = new ImageIcon("C:\\Users\\david\\Desktop\\Book- Recommender\\data\\ICONE\\starUnfilled.png");
+    /**
+     * Area in cui l'utente dovrà inserire il commento sul libro.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private JTextArea[] areaCommento = new JTextArea[9];
-
+    /**
+     * Permette di visualizzare tutti i commenti.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
     private JScrollPane[] js = new JScrollPane[9];
+    /**
+     * Contiene "true" se è stata assegnata una valutazione o "false" in caso contrario.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
+
 
     private boolean boolValutazione = false;
+    /**
+     * Metodo costruttore della classe GiudicaLibro
+     * @param username In fase fi costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo username della classe.
+     * @param r In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo RisultatiRicerca o VisualizzaLibreria della classe.
+     * @param l In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo Libro.
+     * @param lb In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo Libreria.
+     */
 
     
         public GiudicaLibro(String username, Object r, Libro l, Libreria lb
@@ -76,7 +171,7 @@ public class GiudicaLibro extends javax.swing.JFrame {
             this.libriLibreria = (VisualizzaLibreria) r;
             this.ritorno = 1;
         }
-
+//JLABEL
         JLabel giudicaL = new JLabel("Giudica");
         JLabel[] commentoL = new JLabel[9];
         for (int y = 0; y < 9; y++) {
@@ -86,7 +181,7 @@ public class GiudicaLibro extends javax.swing.JFrame {
         JLabel titoloL = new JLabel(titolo);
         titoloL.setFont(new Font("Impact", Font.PLAIN, 25));
         titoloL.setForeground(new Color(24, 24, 24));
-
+//JBUTTON
         JButton conferma = new JButton("Conferma");
         JButton annulla = new JButton("Annulla");
         conferma.addActionListener(this::actionListenerConferma);
@@ -98,6 +193,7 @@ public class GiudicaLibro extends javax.swing.JFrame {
             areaCommento[y].setBorder(BorderFactory.createLineBorder(Color.GRAY));
             js[y] = new JScrollPane(areaCommento[y]);
         }
+        //JPANEL
 
         JPanel pCommento = new JPanel(new FlowLayout(0));
         JPanel pText = new JPanel(new FlowLayout(0));
@@ -114,7 +210,7 @@ public class GiudicaLibro extends javax.swing.JFrame {
         JPanel pTitolo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
         JPanel pStelle = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel pBottoni = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
+//JLABEL
         JLabel descCritL = new JLabel("CRITERIO:");
         JLabel spiegCritL = new JLabel("DESCRIZIONE CRITERIO:");
         JLabel valutazioneL = new JLabel("VALUTAZIONE:");
@@ -125,7 +221,7 @@ public class GiudicaLibro extends javax.swing.JFrame {
         JLabel grandezzaL = new JLabel("()");
         JLabel originalitaL = new JLabel("()");
         JLabel edizioneL = new JLabel("()");
-
+//JPANEL
         JPanel[] pLabel = new JPanel[9];
         JPanel[] pFstelle = new JPanel[9];
         JPanel[] pDescrizione = new JPanel[9];
@@ -198,6 +294,13 @@ public class GiudicaLibro extends javax.swing.JFrame {
 
         setVisible(true);
     }
+    /**
+     * Al clic del bottone annulla viene settata la visibilità della schermata "padre"
+     * RisultatiRicerca oppure VisualizzaLibreria e successivamente la schermata GiudicaLibro in esecuzione
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone indietro.
+     * @see RisultatiRicerca
+     * @see VisualizzaLibreria
+     */
 
     private void actionListenerAnnulla(ActionEvent e) {
         if (ritorno == 0) {
@@ -210,6 +313,17 @@ public class GiudicaLibro extends javax.swing.JFrame {
             this.dispose();
         }
     }
+    /**
+     * Al clic del bottone conferma viene valutata la presenza di errori,
+     * se non ci sono, il giudizio scritto viene salvato sul file tramite il metodo inserisciLibro
+     * e poi viene settata a "true" la visibilità della schermata "padre" RisultatiRicerca oppure VisualizzaLibreria
+     * e succesivamente viene chiusa la schermata  GiudicaLibro in esecuzione;
+     * Se invece ci sono errori viene visualizzata una finestra contenente il messaggio di errore.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone conferma
+     * @see RisultatiRicerca
+     * @see VisualizzaLibreria
+     */
+
 
     private void actionListenerConferma(ActionEvent e) {
         String errori = "";
@@ -233,25 +347,37 @@ public class GiudicaLibro extends javax.swing.JFrame {
         }
 
         if (errori.equals("") && nomEssaggio == false && lb.getNome().equals("")) {
+            //avviso l'utente che il giudizio è stato inserito correttamente
             JOptionPane.showMessageDialog(this, "Il giudizio e' stato salvato correttamente", "Giudizio Salvato", JOptionPane.INFORMATION_MESSAGE);
+            //torno alla schermata risultati ricerca
             risultatiRicerca.setVisible(true);
             nomEssaggio = false;
             this.dispose();
         } else if (errori.equals("") && nomEssaggio == true && lb.getNome().equals("")) {
             JOptionPane.showMessageDialog(this, "Operazione annullata correttamente", "Giudizio non Salvato", JOptionPane.INFORMATION_MESSAGE);
+            //torno alla schermata risultati ricerca
             risultatiRicerca.setVisible(true);
             nomEssaggio = false;
             this.dispose();
         } else if (!lb.getNome().equals("")) {
             JOptionPane.showMessageDialog(this, "Il giudizio e' stato salvato correttamente", "Giudizio Salvato", JOptionPane.INFORMATION_MESSAGE);
+            //torno alla schermata risultati ricerca
             new VisualizzaLibreria(this.lb, username).setVisible(true);
             nomEssaggio = false;
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "ATTENZIONE:\n" + errori, "Attenzione!", JOptionPane.WARNING_MESSAGE);
+
         }
 
     }
+    /**
+     * Al clic di uno dei 45 bottoni presenti nell'array di bottoni stelle,
+     * in base al valore della valutazione, viene cambiata l'icona di tutti i bottoni,
+     * in modo da rispettare il voto assegnato.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone presente
+     * nell'array stelle
+     */
 
     private void listenerStelle(ActionEvent e) {
         boolValutazione = true;
@@ -455,6 +581,12 @@ public class GiudicaLibro extends javax.swing.JFrame {
             }
         }
     }
+    /**
+     * Il metodo si occupa di effettuare la scrittura del giudizio all'interno del file "Giudizio.dati",
+     * Se il giudizio è già presente viene visualizzata una nuova finestra con l'opzione di riscrittura del giudizio.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     */
 
     private void inserisciCriteriLibro() throws IOException {
 
@@ -480,7 +612,7 @@ public class GiudicaLibro extends javax.swing.JFrame {
             String[] StringaSeparata = coding.split("\\$");
             if (StringaSeparata[0].equals(id) && StringaSeparata[2].equals(username)) {
                 Object[] options = {"Sovrescrivi", "Annulla"};
-
+                //0 = SI, 1 = NO, 2 = ANNULLA
                 conferma = JOptionPane.showOptionDialog(null, "Vuoi sovrascrivere il tuo precedente commento?", "Aggiunta commento per " + titolo,
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 esiste = true;

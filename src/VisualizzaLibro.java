@@ -1,3 +1,8 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -8,34 +13,107 @@ import java.io.EOFException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+/**
+ * Questa classe consente di visualizzare i dati e le recensioni associate al libro selezionato
+ * nella finestra RisultatiRicerca oppure nella finestra VisualizzaLibreria.
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ */
 
 public class VisualizzaLibro extends javax.swing.JFrame {
+    /**
+     * Contiene l'oggetto Libro passato dal metodo precedente.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private Libro Libro;
+    /**
+     * Contiene lo username del cliente che ha eseguito l'accesso.
+     * Se invece è stata utilizzata la funzionalità "consulta repository", questo attributo conterrrà una stringa vuota.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private String userName;
+    /**
+     * Contiene il riferimento della finestra "padre" RisultatiRicerca.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
+
 
     private RisultatiRicerca risultatiRicerca;
+    /**
+     * Contiene il riferimento della finestra "padre" VisualizzaLibreria.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private VisualizzaLibreria libriLibreria;
+    /**
+     * Contiene il valore di ritorno associato al tipo di istanza r.
+     * Permette il ritorno alla finestra "padre" corretta.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private int ritorno;
+    /**
+     * Contiene il nome del libro da visualizzare.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private String nomeLibro;
+    /**
+     * Contiene gli oggetti di tipo Giudizio trovati in fase di ricerca.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private ArrayList<Giudizio> giudizi = new ArrayList<Giudizio>();
+    /**
+     * Contiene le stringhe con i dettagli di tutti i giudizi trovati, relativi al ristorante.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private JList<String> risultati;
+    /**
+     * Area in cui il cliente può visualizzare il voto assegnato al singolo criterio.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private JTextArea areaVoto;
+    /**
+     * Area in cui il cliente può visualizzare il commento assegnato al libro per ogni
+     * giudizio presente nella JList risultati.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private JTextArea areaCommento;
+    /**
+     * Array in cui vengono assegnati tutti in commenti dei criteri.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private int[] emozioni = new int[]{0,0,0,0,0};
+    /**
+     * Array in cui vengono assegnate tutte le valutazioni dei criteri.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private int[] Valutazione = new int[]{0,0,0,0,0};
+    /**
+     * Array in cui vengono assegnate tutte le medie delle valutazioni dei criteri.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
 
     private double[] media = new double[]{0,0,0,0,0};
+    /**
+     * Metodo costruttore della classe VisualizzaLibro
+     * @param username In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo nickname della classe.
+     * @param l  In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo Libro della classe.
+     * @param r In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo libriLibreria oppure l'attributo risultatiRicerca della classe.
+     */
 
     public VisualizzaLibro(String username, Libro l, Object r) {
         super("Visualizza: " + l.getTitolo());
@@ -175,6 +253,11 @@ public class VisualizzaLibro extends javax.swing.JFrame {
         this.setVisible(true);
 
     }
+    /**
+     * Alla selezione di un giudizio presente nella JList risultati viene valorizzata la JTextArea
+     * areaCommento con il commento e la valutazione associata al giudizio selezionato.
+     * @param e Oggetto di tipo ListSelectionEvent contenente tutte le informazioni sul clic di un elemento della JList risultati
+     */
 
     private void risultatiSelectionListener(ListSelectionEvent e) {
         if(!risultati.getSelectedValue().equals("Non sono presenti recensioni")) {
@@ -196,6 +279,12 @@ public class VisualizzaLibro extends javax.swing.JFrame {
             areaVoto.setText(temp2);
         }
     }
+    /**
+     * Al clic del bottone indietro viene settata a "true" la visibilità della schermata "padre"
+     * RisultatiRicerca oppure VisualizzaLibreria e successivamente viene chiusa la schermata VisualizzaLibro in esecuzione
+     * @param e Oggetto di tipo ActionEvent  contenente tutte le informazioni sul clic del pulsante indietro
+     * @see RisultatiRicerca
+     */
 
     private void actionListenerIndietro(ActionEvent e) {
         if(ritorno == 0) {
@@ -208,6 +297,14 @@ public class VisualizzaLibro extends javax.swing.JFrame {
             this.dispose();
         }
     }
+    /**
+     * Il metodo si occupa di effettuare la ricerca di tutti i giudizi associati al libro selezionato presenti nel
+     * file "Criteri.dati" e di inserirli all'interno dell'ArrayList giudizi, attributo della classe.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     * @throws EOFException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo EOFException che può essere sollevata dal metodo.
+     */
 
     private void visualizzaEmozioneLibro() throws IOException, EOFException {
         int indice = 0;

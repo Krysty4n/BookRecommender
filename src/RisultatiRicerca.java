@@ -1,3 +1,7 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,22 +11,108 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+/**
+ * Questa classe mostra il/i libro/i trovato/i dalla ricerca e permette di:
+ * 1) Visualizzare un libro;
+ * 2) Aggiungere un libro alla libreria;
+ * 3) Creare una libreria;
+ * 4) Giudicare un libro;
+ * 5) Tornare al tipo di ricerca;
+ * Rende visibili con un elenco i libri cercati dall'utente.
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ * @see VisualizzaLibro
+ * @see GiudicaLibro
+ * @see CercaLibro
+ * @see ElencoLibreria
+ */
 
 
 
 public class RisultatiRicerca extends javax.swing.JFrame {
+    /**
+     * Contiene lo username del cliente che ha eseguito l'accesso.
+     * Se invece è stata utilizzata la funzionalità "consulta repository", questo attributo conterrà una stringa vuota.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private String userName;
+
+    /**
+     * Contiene gli oggetti di tipo Libro, trovati dalla ricerca.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
+
     private JList<Libro> risultati;
+    /**
+     * Può contenere il nome ricercato nella finestra CercaLibro, in base al
+     * metodo di ricerca scelto.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private String filtro1;
+    /**
+     * Nel caso in cui sia stata utilizzata la ricerca per autore e anno, questo attributo contiene
+     * il tipo ricercato nella finestra percedente.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private String filtro2;
+    /**
+     * Conterrà il nome dell'oggetto Libreria a cui appartiene il libro.
+     * Se viene passasto da RisultatoRicerca risulta null.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private String nomeLibreria;
+    /**
+     * Conterrà l'oggetto Libro selezionato dalla JList risultati.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private Libro libroSelezionato;
+    /**
+     * Contiene una variabile booleana che permette l'aggiunta di più libri.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private boolean selezionaUnAltro;
+    /*
+     * Contiene una variabile booleana che permette la visualizzazione di alcuni bottoni solo dopo il login.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private boolean aggiungi;
+    /**
+     * Conterrà l'oggetto Libreria che deve essere passato alla finestra GiudicaLibro.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
     private Libreria lb;
+    /**
+     * Contiene gli oggetti Libro trovati dal metodo CercaLibro.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
+
 
     private ArrayList<Libro> listaRicerca = new ArrayList<Libro>();
+    /**
+     * Contiene i libri da aggiungere alla libreria.
+     * Potrebbe essere vuota.
+     * Dichiarato private così da essere visto solo dalla classe attuale.
+     */
+
     String risultatoTitoli;
+    /**
+     *  Metodo costruttore della finestra RisultatoRicerca
+     * @param filtro1 Valorizza l'attributo filtro1 della classe.
+     * @param filtro2 Valorizza l'attributo filtro2 della classe.
+     * @param tipoRicerca Contiene un numero da 1 a 2, che indica quale tipo di ricerca si intedde effettuare:
+     * 1) per titolo
+     * 2) per autore e anno
+     * @param userName In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo nickname della classe.
+     * @param nomeLibreria In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo nomePlaylist della classe.
+     * @param risultatoTitoli In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo risultatotitoli della classe.
+     * @param add In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo aggiungi della classe.
+     */
 
     public RisultatiRicerca(String filtro1, String filtro2, int tipoRicerca, String userName, String nomeLibreria, String risultatoTitoli, boolean add) {
         super("Risultati Ricerca");
@@ -125,12 +215,27 @@ public class RisultatiRicerca extends javax.swing.JFrame {
 
 
     }
+    /**
+     * Al clic del bottone indietro verrà creata una nuova finestra CercaLibro
+     * e verrà chiusa la finestra VisualizzaLibreria in esecuzione.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone indietro
+     * @see ElencoLibreria
+     */
 
     private void actionListenerIndietro(ActionEvent e) {
         setVisible(false);
         (new CercaLibro(this.userName, nomeLibreria, risultatoTitoli, true, aggiungi)).setVisible(true);
         dispose();
     }
+    /**
+     * Al clic del bottone giudica , se è stato selezionato un libro nella JList
+     * risultati, viene creata una nuova finestra GiudicaLibro e viene
+     * settata a "false" la visibilità della finestra RisultatiRicerca in esecuzione.
+     * Nel caso in cui non fosse stato selezionato un brano, viene mostrata una finestra
+     * contenente un messaggio di errore.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone giudica
+     * @see GiudicaLibro
+     */
 
     private void actionListenerGiudica(ActionEvent e) {
         if (this.risultati.getSelectedValue() == null) {
@@ -142,6 +247,18 @@ public class RisultatiRicerca extends javax.swing.JFrame {
             dispose();
         }
     }
+    /**
+     * Al clic del bottone addLibreria, se è stato selezionato un libro nella JList
+     * risultati, viene invocato il metodo RegistraLibreria che permette di aggiungere i libri selezionati.
+     * Nel caso in cui non fosse stato selezionato un libro, viene mostrata una finestra
+     * contenente un messaggio d'errore.
+     * Il metodo effettua diversi controlli e risulta chiamabile solo quando viene creata una nuova libreria.
+     * Permette tramite una finestra l'aggiunta di più libri mantenendo o utilizzando una nuova ricerca.
+     * Se si vanno ad aggiungere più canzoni viene creata una nuova finestra CercaLibro e viene
+     * settata a "false" la visibilità della finestra RisultatiRicerca in esecuzione.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone giudica
+     * @see CercaLibro
+     */
 
     private void actionListeneraddAllaLibreria(ActionEvent e) {
         if (this.risultati.getSelectedValue() == null) {
@@ -185,6 +302,15 @@ public class RisultatiRicerca extends javax.swing.JFrame {
 
         }
     }
+    /**
+     * Al clic del bottone visualizza, se è stato selezionato un libro nella JList
+     * risultati, viene creata una nuova finestra VisualizzaLibro e viene
+     * settata a "false" la visibilità della finestra RisultatiRicerca in esecuzione.
+     * Nel caso in cui non fosse stato selezionato un libro, viene mostrata una finestra
+     * contenente un messaggio d'errore.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone visualizza
+     * @see VisualizzaLibro
+     */
 
     private void actionListenerVisualizza(ActionEvent e) {
         if (this.risultati.getSelectedValue() == null) {
@@ -201,6 +327,17 @@ public class RisultatiRicerca extends javax.swing.JFrame {
             dispose();
         }
     }
+    /**
+     * Al clic del bottone addLibro, se è stato selezionato un libro nella JList
+     * risultati, viene invocato il metodo creaLibro che permette di aggiungere il libro selezionato alla libreria.
+     * Nel caso in cui non fosse stato selezionato un libro, viene mostrata una finestra
+     * contenente un messaggio d'errore.
+     * Il metodo risulta chiamabile solo quando viene aggiunto un solo brano ad una libreria.
+     * Al termine del metodo viene creata una nuova finestra ElencoLibreria e viene settata a "false"
+     * la visibilità della finestra RisultatiRicerca in esecuzione.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone giudica
+     * @see ElencoLibreria
+     */
 
     private void actionListeneraddLibro(ActionEvent e) {
         if (this.risultati.getSelectedValue() == null) {
@@ -220,6 +357,19 @@ public class RisultatiRicerca extends javax.swing.JFrame {
         }
 
     }
+    /**
+     * Metod che si occupa di effettuare la ricerca del/dei libro/i sulla base dei parametri inseriti nella schermata
+     * CercaLibro all'interno del file "Libri.dati".
+     * Viene unicamente richiamato in fase di costruzione della
+     * finestra con il solo scopo di mostrare all'utente i risultati all'interno della JList risultati.
+     * @param index Contiene un numero da 1 a 2 indicante il tipo di ricerca da effettuare:
+     * 1) Titolo;
+     * 2) Autore e anno.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     * @throws EOFException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo EOFException che può essere sollevata dal metodo.
+     */
 
     private void cercaLibro(int index) throws IOException, EOFException {
         int indice = 0;
@@ -274,6 +424,16 @@ public class RisultatiRicerca extends javax.swing.JFrame {
             }
         }
     }
+    /**
+     * Metodo che si occupa di effettuare la registrazione della nuova libreria sulla base dei parametri inseriti nella schermata
+     * CercaLibro e RisultatiRicerca all'interno del file "Libreria.dati".
+     * Viene chiamato in fase di costruzione della nuova libreria.
+     * @param s Contiene la stringa di libri da inserire nella playlist.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     * @throws EOFException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo EOFException che può essere sollevata dal metodo.
+     */
 
     private void RegistraLibreria(String s) throws IOException, EOFException {
         try {
@@ -302,6 +462,14 @@ public class RisultatiRicerca extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
+    /**
+     * Metodo che si occupa di effettuare l'aggiunta del nuovo libro selezionato alla libreria sulla base dei perimetri inseriti nella schermata
+     * CercaLibro e RisultatiRicerca all'interno del file "Libreria.dati".
+     * Viene chiamato in fase di aggiunta di un libro ad una libreria.
+     * @param idSel Contiene l'id della canzone da aggiungere alla libreria.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     */
 
     private void creaLibro(String idSel) throws IOException {
         File a = new File("C:\\Users\\david\\Desktop\\Book- Recommender\\data\\Libreria.txt");

@@ -1,20 +1,65 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.ArrayList;
+/**
+ * Questa classe consente di scegliere se:
+ * 1) Visualizzare una libreria;
+ * 2) Aggiungere una libreria;
+ * 3) Cancellare una libreria;
+ * 4) Tornare all'area riservta;
+ * Rende visibili con un elenco le playlist di un utente.
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ */
+
 
 public class ElencoLibreria extends javax.swing.JFrame {
+    /**
+     * Contiene lo username del cliente che ha eseguito l'accesso.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private String username;
 
+    /**
+     * Contiene il risultato del metodo esisteLb.
+     * viene inizializzato a false come condizione base.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
+
     private boolean exist = false;
+    /**
+     * Contiene il nome della/e librerie trovate dalla ricerca
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private JList<Libreria> risultati;
+    /**
+     * Conterrà l'oggetto Libreria selezionato dalla JList risultati.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private Libreria libreriaSelezionata;
+    /**
+     * Contiene gli oggetti Libreria trovati dal metodo ricercaLibreria.
+     * Dichiaraato private così da essere visto solo dalla classe attuale
+     */
 
     private ArrayList<Libreria> listaRicerca = new ArrayList<Libreria>();
+    /**
+     * Metodo costruttore della finestra ElencoLibreria
+     * @param username In fase di costruzione dell'oggetto, questo parametro verrà utoilizzato per valorizzare
+     * l'attributo username della classe,
+     */
+
 
     public ElencoLibreria(String username) {
 
@@ -34,24 +79,26 @@ public class ElencoLibreria extends javax.swing.JFrame {
         }
         if(listaRicerca.size() == 0) {
 
+            //JLABEL
+
             JLabel titoloL = new JLabel("Librerie trovate: 0");
             titoloL.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
             titoloL.setForeground(Color.decode("#6699FF"));
-
+//JBUTTON
             JButton indietro = new JButton("Indietro");
             JButton crea = new JButton("Crea");
             indietro.addActionListener(this::actionListenerIndietro);
             crea.addActionListener(this::actionListenerCrea);
-
+//JLIST
             JList<String> vuota = new JList<>();
             vuota.setPreferredSize(new Dimension(260, 100));
             vuota.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             JScrollPane js = new JScrollPane(vuota);
-
+//JLIST VUOTA
             DefaultListModel<String> lm = new DefaultListModel<String>();
             lm.addElement("Non sono presenti librerie");
             vuota.setModel(lm);
-
+//JPANEL
             JPanel pTitolo = new JPanel(new FlowLayout());
             JPanel pCentro = new JPanel();
             JPanel pBottoni = new JPanel(new FlowLayout());
@@ -71,11 +118,11 @@ public class ElencoLibreria extends javax.swing.JFrame {
             this.setVisible(true);
         }
         else {
-
+//JLABEL
             JLabel titoloL = new JLabel("Librerie trovate: " + listaRicerca.size());
             titoloL.setFont(new Font("Impact", Font.PLAIN, 20));
             titoloL.setForeground(new Color(24, 24, 24));
-
+//JBUTTON
             JButton visualizza = new JButton("Visualizza");
             JButton indietro = new JButton("Indietro");
             JButton crea = new JButton("Crea");
@@ -83,17 +130,19 @@ public class ElencoLibreria extends javax.swing.JFrame {
             visualizza.addActionListener(this::actionListenerVisualizza);
             crea.addActionListener(this::actionListenerCrea);
             cancella.addActionListener(this::actionListenerCancella);
-
+//JLIST
             risultati = new JList<>();
             risultati.setPreferredSize(new Dimension(260, listaRicerca.size()*18));
             risultati.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             JScrollPane js = new JScrollPane(risultati);
 
+            //Riempo la JList con gli oggetti Libreria
             DefaultListModel<Libreria> lm = new DefaultListModel<Libreria>();
             for (Libreria l : listaRicerca)
                 lm.addElement(l);
             risultati.setModel(lm);
 
+            //JPanel
             JPanel pTitolo = new JPanel(new FlowLayout());
             JPanel pCentro = new JPanel();
             JPanel pBottoni = new JPanel(new FlowLayout());
@@ -116,13 +165,26 @@ public class ElencoLibreria extends javax.swing.JFrame {
 
         }
 
-    } 
+    }
+    /**
+     * Al clic del bottone Indietro verrà creata una nuova finestra AreaRiservata
+     * e verrà chiusa la finestra ElencoLibreria in esecuzione.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone indietro
+     * @see AreaRiservata
+     */
 
     private void actionListenerIndietro(ActionEvent e) {
         this.setVisible(false);
         new AreaRiservata(username).setVisible(true);
         this.dispose();
     }
+    /**
+     * Al clic del bottone crea verrà invocato il metodo esisteLb e a seconda del risultato:
+     * True: verrà creata una nuova finestra CercaLibro e verrà chiusa la finestra ElencoLibreria in esecuzione;
+     * False: verrà viusalizzato un messagio d'errore.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone giudica.
+     * @see RegistraLibreria (metodo presente in RisultatiRicerca)
+     */
 
     private void actionListenerCrea(ActionEvent e){
 
@@ -146,6 +208,15 @@ public class ElencoLibreria extends javax.swing.JFrame {
             }
         }
     }
+    /**
+     * Al clic del bottone Cancella, se è stata selezionata una libreria nella JList risultati,
+     * verrà invocato il metodo cancellaLibreria che andrà ad eliminare la Libreria selezionata.
+     * Succesivamente verrà creata una nuova finestra AreaRiservata
+     * e verrà chiusa la finestra ElencoLibreria in esecuzione.
+     * Nel caso in cui non fosse stata selezionata una libreria, verrà mostrata una finestra contenente un messaggio d'errore.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone cancella.
+     * @see AreaRiservata
+     */
 
     private void actionListenerCancella(ActionEvent e){
         if(risultati.getSelectedValue() == null){
@@ -168,6 +239,15 @@ public class ElencoLibreria extends javax.swing.JFrame {
             dispose();
         }
     }
+    /**
+     * Al clic del bottone Visualizza, se è stata selezionata una libreria nella JList
+     * risultati, verrà creata una nuova finestra VisualizzaLibreriae verrà
+     * settata a "false" la visibilità della finestra ElencoLibreria in esecuzione.
+     * Nel caso in cui non fosse stata selezionata una libreria, verrà mostrata una finestra
+     * contenente un messaggio d'errore.
+     * @param e Oggetto di tipo ActionEvent contenente tutte le informazionni sul clic del bottone visualizza.
+     * @see VisualizzaLibreria
+     */
 
     private void actionListenerVisualizza(ActionEvent e) {
         if(risultati.getSelectedValue() == null){
@@ -181,6 +261,15 @@ public class ElencoLibreria extends javax.swing.JFrame {
             new VisualizzaLibreria(libreriaSelezionata, username);
         }
     }
+    /**
+     * Metodo che si occupa di effettuare la ricerca della/e libreria sulla base del parametro nickname
+     * all'interno del file "Libreria.dati". Viene unicamente richiamato in fase della costruzione della
+     * finestra con il solo scopo di mostrare all'utente i risultati trovati all'interno della JList risultati.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * del tipo IOException che può essere sollevata dal metodo.
+     * @throws EOFException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * del tipo EOFException che può essere sollevata dal metodo.
+     */
 
     private void ricercaLibreria() throws IOException, EOFException{
         int indice = 0;
@@ -213,6 +302,17 @@ public class ElencoLibreria extends javax.swing.JFrame {
         }
         br.close();
     }
+
+    /**
+     * Metodo che si occupa di effettuare la ricerca della/e libreria sulla base del parametro nickname
+     * all'interno del file "Libreria.dati". Viene unicamente richiamato in fase della costruzione della
+     * finestra con il solo scopo di mostrare all'utente i risultati trovati all'interno della JList risultati.
+     * @return ritorna un valore booleano che indica se esiste già il nome che si vuole dare alla libreria
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * del tipo IOException che può essere sollevata dal metodo.
+     * @throws EOFException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * del tipo EOFException che può essere sollevata dal metodo.
+     */
 
     private boolean esisteLb(String nome) throws IOException, EOFException {
         String temporanea;
@@ -250,6 +350,15 @@ public class ElencoLibreria extends javax.swing.JFrame {
         }
         return esiste;
     }
+    /**
+     * Metodo che si occupa dei effettuare la cancellazione di una libreria sulla base dei parametri passati nel metodo
+     * actionListenerCancella all'interno del file "Libreria.dati". Viene unicamente richiamato in fase di cancellazione della libreria
+     * nel metodo actionListenerCancella.
+     * @param username Contiene il nickname dell'utente a cui appartiene la libreria.
+     * @param name Contiene un nome della libreria da cancellare
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * del tipo IOException che può essere sollevata dal metodo.
+     */
 
     private void cancellaLibreria(String username, String name) throws IOException {
 

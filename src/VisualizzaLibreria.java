@@ -1,16 +1,62 @@
+//Perri Christian matricola: 754702 VA
+//De Felice Lorenzo  matricola: 757074 VA
+//Bilora Davide  matricola: 757011 VA
+//Mariani Amati Federico matricola: 756811 VA
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.ArrayList;
-
+/**
+ * Questa classe permette di scegliere se:
+ * 1) Visualizzare un libro;
+ * 2) Aggiungere un libro alla libreria;
+ * 3) Cancellare un libro dalla libreria;
+ * 4) Giudicare un libro;
+ * 5) Tornare all'elenco delle librerie.
+ * Rende visibili con un elenco i libri di una specifica libreria di un utente.
+ * @author Perri Christian matricola: 754702
+ * @author De Felice Lorenzo  matricola: 757074
+ * @author Bilora Davide  matricola: 757011
+ * @author Mariani Amati Federico matricola: 756811
+ */
 public class VisualizzaLibreria extends javax.swing.JFrame {
+    /**
+     * Contiene il nickname del cliente che ha eseguito l'accesso.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private String userName;
+    /**
+     * Contiene l'oggetto di tipo Libreria ricevuto.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private Libreria l;
+    /**
+     * Contiene il nome della libreria che contiene i libri.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private String nome;
+    /**
+     * Contiene gli oggetti di tipo Libro trovati dalla ricerca.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private JList<Libro> risultati;
+    /**
+     * Conterrà l'oggetto Libro selezionato dalla JList risultati.à
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private Libro LibroSelezionato;
+    /**
+     * Conterrà gli oggetti Libro trovati dal metodo ricercaLibri.
+     * Dichiarato private così da essere visto solo dalla classe attuale
+     */
     private ArrayList<Libro> listaRicerca = new ArrayList<Libro>();
+    /**
+     * Metodo costruttore della finestra VisualizzaLibreria
+     * @param l valorizza l'attributo p della classe.
+     * @param username In fase di costruzione dell'oggetto, questo parametro verrà utilizzato per valorizzare
+     * l'attributo username della classe
+     */
 
     public VisualizzaLibreria(Libreria l, String username) {
         super(l.getNome());
@@ -126,6 +172,12 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
 
         }
     }
+    /**
+     * Al clic del bottone indietro verrà creata una nuova finestra ElencoLibrerie
+     * e verrà chiusa la finestra VisualizzaLibreria in esecuzione.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone indietro
+     * @see ElencoLibreria
+     */
 
 
     private void actionListenerIndietro(ActionEvent e) {
@@ -133,6 +185,13 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
         new ElencoLibreria(userName).setVisible(true);
         this.dispose();
     }
+    /**
+     * Al clic del bottone cancella verrà cancellato il libro selezionato utilizzando il metodo cancellaLibro,
+     * verrà creata una nuova finestra ElencoLibrerie e vverà chiusa la finestra VisualizzaLibreria in esecuzione.
+     * se non è stato selezionato nessun libro verrà visualizzato un messaggio d'errore.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone cancella
+     * @see ElencoLibreria
+     */
 
     private void actionListenerCancellaLibro(ActionEvent e) {
         if (this.risultati.getSelectedValue() == null) {
@@ -149,6 +208,13 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
             dispose();
         }
     }
+    /**
+     * Al clic del bottone aggiungi verrà creata una nuova finestra CercaLibro
+     * e verrà chiusa la finestra VisualizzaLibreria in esecuzione.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone aggiungi
+     * @see CercaLibro
+     */
+
 
 
     private void actionListenerAggiungiLibro(ActionEvent e) {
@@ -156,6 +222,14 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
         (new CercaLibro(userName, this.l.getNome(), "", true, true)).setVisible(true);
         dispose();
     }
+    /**
+     * Al clic del bottone giudica, se è stato selezionato un libro nella JList risultati,
+     * viene creata una nuova finestra GiudicaLibro e viene
+     * settata a "false" la visibilità della finestra VisualizzaLibreria in esecuzione.
+     * Nel caso in cui non fosse stato selezionato un libro, viene mostrata una finestra contenente un messaggio d'errore.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone giudica
+     * @see GiudicaLibro
+     */
 
 
     private void actionListenerGiudica(ActionEvent e) {
@@ -167,6 +241,14 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
             dispose();
         }
     }
+    /**
+     * Al clic del bottone visualizza, se è stato selezionato un brano nella JList risultati,
+     * viene creata una nuova finestra VisualizzaLibro e viene
+     * settata a "false" la visibilità della finestra VisualizzaLibreria in esecuzione.
+     * Nel caso in cui non fosse stato selezionato un libro, viene mostrata una finestra contenente un messaggio d'errore.
+     * @param e Oggetto di tipo ActionEvent contentente tutte le informazioni sul clic del bottone visualizza
+     * @see VisualizzaLibro
+     */
 
     private void actionListenerVisualizza(ActionEvent e) {
         if (risultati.getSelectedValue() == null) {
@@ -181,6 +263,16 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
             new VisualizzaLibro(userName, LibroSelezionato, this).setVisible(true);
         }
     }
+    /**
+     * Metodo che si occupa di effettuare la ricerca del/dei libro/i sulla base dei parametri inseriti nella schermata
+     * ElencoLibreria all'interno del file "Libri.dati". Viene unicamente richiamato in fase di costruzione della
+     * finestra con il solo scopo di mostrare all'utente i risultati trovati all'interno della JList risultati.
+     * A sua volta utilizza il metodo dettagliLibro per riempire la JList risultati di oggetti di tipo Libro
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     * @throws EOFException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo EOFException che può essere sollevata dal metodo.
+     */
 
 
     private void ricercaLibri() throws IOException, EOFException {
@@ -199,6 +291,17 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
             }
         }
     }
+    /**
+     * Metodo che si occupa di effettuare la ricerca dei dettagli dei libri sulla base dei parametri passati dal metodo
+     * ricercaLibri all'interno del file "Libri.dati". Viene unicamente richiamato in fase di costruzione della finestra
+     * con il solo scopo di restituire oggetti di tipo Libro per riempire la JList risultati.
+     * @param id è la stringa che permette la ricerca dei dettagli della canzone nei file.
+     * @return Ritorno l'oggetto Libro che corrisponde al parametro id passato.
+     * @throws FileNotFoundException FileNotFoundException Dichiara che, in fase di richiamo di questo metodo, dovr&agrave; essere gestita un'eccezione
+     * di tipo FileNotFoundException che pu&ograve; essere sollevata dal metodo.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     */
 
 
     private Libro dettagliLibro(String id) throws FileNotFoundException, IOException {
@@ -226,7 +329,14 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
         return l;
     }
 
-
+    /**
+     * Metod che si occupa di effettuare la cancellazione del libro selezionato passato dal metodo
+     * actionListenerCancellaLibro all'interno del file "Libreria.dati".
+     * Viene sempre richiamato quando si vuole effettuare la cancellazione di un libro dalla libreria.
+     * @param idSel è la stringa che permette la ricerca e l'eliminazione del libro corretto dal file.
+     * @throws IOException Dichiara che, in fase di richiamo di questo metodo, dovrà essere gestita un'eccezione
+     * di tipo IOException che può essere sollevata dal metodo.
+     */
     private void cancellaLibro(String idSel) throws IOException {
         File a = new File("C:\\Users\\david\\Desktop\\Book- Recommender\\data\\Libreria.txt");
         if (!a.exists()) {

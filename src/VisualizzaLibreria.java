@@ -284,7 +284,7 @@ public class VisualizzaLibreria extends javax.swing.JFrame {
             String[] StringaSeparata = coding.split("\\$");
 
             for (int i = 0; i < StringaSeparata.length; i++) {
-                provvisorio = new Libro();
+               Libro provvisorio = new Libro();
                 provvisorio = dettagliLibro(StringaSeparata[i].trim());
                 listaRicerca.add(indice, provvisorio);
                 indice++;

@@ -274,8 +274,8 @@ public class RisultatiRicerca extends javax.swing.JFrame {
                 conferma = JOptionPane.showOptionDialog(null, "Vuoi aggoingere un altro linro?", "Seleziona libro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, option[0]);
                 if (conferma == 0) {
                     if (risultatoTitoli.equals(""))
-                        risultatoTitoli = risultatoTitoli + this.risultati.getSelectedValue().getId();
-                    else risultatoTitoli = risultatoTitoli + "$" + this.risultati.getSelectedValue().getId();
+                        risultatoTitoli = risultatoTitoli + this.risultati.getSelectedValue().getTitolo();
+                    else risultatoTitoli = risultatoTitoli + "$" + this.risultati.getSelectedValue().getTitolo();
                     cambioTitolo = JOptionPane.showOptionDialog(null, "Vuoi utilizzare lo stesso parametro di ricerca?", "Seleziona Libro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, option2, option2[0]);
 
                     if (cambioTitolo == 0) {
@@ -287,8 +287,8 @@ public class RisultatiRicerca extends javax.swing.JFrame {
 
                 } else if (conferma == 1) {
                     if (risultatoTitoli.equals(""))
-                        risultatoTitoli = risultatoTitoli + this.risultati.getSelectedValue().getId();
-                    else risultatoTitoli = risultatoTitoli + "$" + this.risultati.getSelectedValue().getId();
+                        risultatoTitoli = risultatoTitoli + this.risultati.getSelectedValue().getTitolo();
+                    else risultatoTitoli = risultatoTitoli + "$" + this.risultati.getSelectedValue().getTitolo();
                     selezionaUnAltro = false;
                     try {
                         RegistraLibreria(risultatoTitoli);
@@ -344,7 +344,7 @@ public class RisultatiRicerca extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selezionare un libro", "Errore selezione", 2);
         } else {
             try {
-                creaLibro(this.risultati.getSelectedValue().getId());
+                creaLibro(this.risultati.getSelectedValue().getTitolo());
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -384,10 +384,10 @@ public class RisultatiRicerca extends javax.swing.JFrame {
                     StringaSeparata[4] = StringaSeparata[4].replace("Titolo;", "");
                     if (StringaSeparata[4].toLowerCase().contains(this.filtro1)) {
                         Libro provvisorio = new Libro();
-                        provvisorio.setId(StringaSeparata[1].replace("ID:", ""));
-                        provvisorio.setTitolo(StringaSeparata[2].replace("Titolo:", ""));
+                       // provvisorio.setTitolo(StringaSeparata[1].replace("ID:", ""));
+                        //provvisorio.setTitolo(StringaSeparata[2].replace("Titolo:", ""));
                         provvisorio.setAnno(StringaSeparata[3].replace("Anno:", ""));
-                        provvisorio.setGenere(StringaSeparata[4].replace("Genere:", ""));
+                       // provvisorio.setGenere(StringaSeparata[4].replace("Genere:", ""));
                         this.listaRicerca.add(indice, provvisorio);
                         indice++;
 
@@ -410,10 +410,10 @@ public class RisultatiRicerca extends javax.swing.JFrame {
                         provvisorio.setAutore(StringaSeparata[3]);
                         StringaSeparata[2] = StringaSeparata[2].replace("Anno;", "");
                         if (StringaSeparata[2].toLowerCase().contains(this.filtro2)) {
-                            provvisorio.setId(StringaSeparata[1].replace("ID:", ""));
+                            provvisorio.setTitolo(StringaSeparata[1].replace("ID:", ""));
                             provvisorio.setTitolo(StringaSeparata[2].replace("Titolo:", ""));
                             provvisorio.setAnno(StringaSeparata[2]);
-                            provvisorio.setGenere(StringaSeparata[4].replace("Genere:", ""));
+                           // provvisorio.setGenere(StringaSeparata[4].replace("Genere:", ""));
                             this.listaRicerca.add(indice, provvisorio);
                             indice++;
 

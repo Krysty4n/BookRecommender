@@ -159,25 +159,18 @@ public class Accesso extends javax.swing.JFrame {
                 FileReader f = new FileReader(a);
                 BufferedReader br = new BufferedReader(f);
 
-                // per lettura del file da usare per capire errore del file
-                while(br.ready()){
-                    System.out.println((char)br.read());
-                }
-
-
               while((tmp = br.readLine()) != null){
-                    //dividi riga in username e password
-                    String[] credenziali = tmp.split(":");
-                    if(credenziali.length == 2){
-                        String fileUserName = credenziali[0].trim();
-                        String filePassword = credenziali[1].trim();
-                        System.out.println("Username file: " + fileUserName + ", Password file: " + filePassword);
-                        System.out.println("Username input: " + userName + ", Password input: " + password);
-                  if(fileUserName.equals(userName) && filePassword.equals(password)){
-                        accedi = true;
-                        break;
-                    }
-                    }               
+                  if (tmp.length() > 9){
+
+                      if (tmp.substring(0, 8).equals("userName") && tmp.substring(9).equals(userName)) {
+                          br.readLine();
+                          tmp = br.readLine();
+                          if (tmp.trim().substring(9).equals(password)) {
+                              accedi = true;
+                          }
+                      }
+
+                      }
                 }
             
 

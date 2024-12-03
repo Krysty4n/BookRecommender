@@ -21,6 +21,25 @@ public class Pannello {
 
         JTable table =tabella.getTable;
 
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        searchPanel  searchPanel1 = new searchPanel(tabella);
+        searchPanel1.setPreferredSize(new Dimension(300,300));
+
+        pannello.add(toolBar,BorderLayout.NORTH);
+        pannello.add(searchPanel1, BorderLayout.EAST);
+        pannello.add(scrollPane, BorderLayout.CENTER);
+
+        pannello.setVisible(true);
+
+
+
+    }
+
+    String getCSVfilePath(){
+        FilePathOSBased filePathOSBased = new FilePathOSBased();
+        return filePathOSBase.getFilePath() + "Libri.dati.csv";
+
     }
 
 }

@@ -20,7 +20,7 @@ import java.io.*;
  * @author De Felice Lorenzo  matricola: 757074
  * @author Bilora Davide  matricola: 757011
  * @author Mariani Amati Federico matricola: 756811
- */
+ */hiafofoh
 
 
 public class registrazioneUtente extends javax.swing.JFrame {

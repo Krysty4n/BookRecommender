@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Book- Recommender:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Book__Recommender_jar</output-path>
-    <root id="archive" name="Book- Recommender.jar">
-      <element id="module-output" name="Book- Recommender" />
-    </root>
-  </artifact>
-</component>
